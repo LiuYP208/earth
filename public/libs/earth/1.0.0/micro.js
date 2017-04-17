@@ -12,6 +12,7 @@ var µ = function() {
     var τ = 2 * Math.PI;
     var H = 0.0000360;  // 0.0000360°φ ~= 4m
     var DEFAULT_CONFIG = "current/wind/surface/level/orthographic";
+    //顶层数据
     var TOPOLOGY = isMobile() ? "/data/earth-topo-mobile.json?v2" : "/data/earth-topo.json?v2";
 
     /**
@@ -338,6 +339,8 @@ var µ = function() {
      * both the longitude and latitude to create two lines. These lines are then projected to pixel space, where
      * they become diagonals of triangles that represent how much the projection warps longitude and latitude at
      * that location.
+     * 此方法使用有限差分估计来计算扭曲通过添加少量(h)的经度和纬度来创建两条线。
+     * 这些线是将像素空间,他们成为对角线三角形代表多少投影扭曲经度和纬度位置。
      *
      * <pre>
      *        (λ, φ+h)                  (xλ, yλ)
@@ -362,6 +365,7 @@ var µ = function() {
 
         // Meridian scale factor (see Snyder, equation 4-3), where R = 1. This handles issue where length of 1° λ
         // changes depending on φ. Without this, there is a pinching effect at the poles.
+        //变化取决于φ。没有这个φ,则是一个缩放效果 极地？？。
         var k = Math.cos(φ / 360 * τ);
 
         return [
